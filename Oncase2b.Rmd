@@ -26,4 +26,10 @@ serie_tempo_2b <- read_excel("~/Job/Oncase desafio/serie_tempo_2b.xlsx")
 View(serie_tempo_2b)
 ```
 
+Transformando o data frame numa série temporal
+```{r}
+ts_2b = ts(serie_tempo_2b$faturamento, start = c(2020,1), end = c(2021,9), frequency=365)
+ts_2b
+```
+
 
