@@ -1,0 +1,40 @@
+---
+title: "teste"
+author: "Pedro"
+date: "26/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+```{r cars}
+library(readxl)
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+
+```
+
+
+```{r}
+receita <- read_excel("~/Job/Oncase desafio/Receita_json_Oficial.xlsx")
+```
+
+
+```{r}
+receita = rename(receita, fat = Column1.fat,
+       date = Column1.date,
+       categories = Column1.categories,
+       calories = Column1.calories,
+       protein = Column1.protein,
+       rating = Column1.rating,
+       title = Column1.title,
+       sodium = Column1.sodium)
+head(receita)
+```
+

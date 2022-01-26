@@ -3,9 +3,9 @@ title: "Oncase2b"
 author: "Pedro"
 date: "25/01/2022"
 output:
-  html_document: default
-  pdf_document: default
   word_document: default
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -26,7 +26,7 @@ library(readxl)
 
 ```{r}
 serie_tempo_2b <- read_excel("~/Job/Oncase desafio/serie_tempo_2b.xlsx")
-View(serie_tempo_2b)
+#View(serie_tempo_2b)
 ```
 
 Transformando o data frame numa série temporal
@@ -44,9 +44,9 @@ boxplot(ts_2b)
 
 Segue abaixo uma análise de decomposição da série em estudo.
 
-```{r eval=FALSE, include=FALSE}
-dec =   decompose(ts_2b)
-autoplot(dec)
+```{r}
+#dec =   decompose(ts_2b)
+#autoplot(dec)
 
 ```
 Percebe-se que não é possível decompor a série pois ela não tem mais de 1 período.
@@ -63,8 +63,8 @@ autoplot(window(dec$trend, start=c(2020,9)))
 Foram realizadas algumas tentativas de avaliar a existência de sazonalidad porém não foi possível por não ter mais de um período na série.
 
 ```{r}
-ggseasonplot(ts_2b)
-ggseasonplot(window(ts_2b, start=c(2021)))
+#ggseasonplot(ts_2b)
+#ggseasonplot(window(ts_2b, start=c(2021)))
 
 ```
 
