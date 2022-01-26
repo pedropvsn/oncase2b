@@ -257,7 +257,7 @@
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{serie\_tempo\_2b }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"\textasciitilde{}/Job/Oncase desafio/serie\_tempo\_2b.xlsx"}\NormalTok{)}
-\FunctionTok{View}\NormalTok{(serie\_tempo\_2b)}
+\CommentTok{\#View(serie\_tempo\_2b)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -294,5 +294,205 @@ Verificando a existência de sazonalidade
 \end{Shaded}
 
 \includegraphics{Oncase2b_files/figure-latex/unnamed-chunk-4-3.pdf}
+
+Segue abaixo uma análise de decomposição da série em estudo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#dec =   decompose(ts\_2b)}
+\CommentTok{\#autoplot(dec)}
+\end{Highlighting}
+\end{Shaded}
+
+Percebe-se que não é possível decompor a série pois ela não tem mais de
+1 período.
+
+gerou um autoplot da decomposi??o acima observar se existe um padr?o de
+sazonalidade e verificar a regularidade
+
+Foram realizadas algumas tentativas de avaliar a existência de
+sazonalidad porém não foi possível por não ter mais de um período na
+série.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ggseasonplot(ts\_2b)}
+\CommentTok{\#ggseasonplot(window(ts\_2b, start=c(2021)))}
+\end{Highlighting}
+\end{Shaded}
+
+\#teste de estacionariedade
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{est }\OtherTok{=} \FunctionTok{ur.kpss}\NormalTok{(ts\_2b)}
+\FunctionTok{print}\NormalTok{(est)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ####################################### 
+## # KPSS Unit Root / Cointegration Test # 
+## ####################################### 
+## 
+## The value of the test statistic is: 0.1174
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ndiffs}\NormalTok{(ts\_2b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tsdisplay}\NormalTok{(ts\_2b)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oncase2b_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo }\OtherTok{=} \FunctionTok{auto.arima}\NormalTok{(ts\_2b, }\AttributeTok{trace =}\NormalTok{ T,}\AttributeTok{stepwise =}\NormalTok{ F, }\AttributeTok{approximation =}\NormalTok{ F )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: The chosen seasonal unit root test encountered an error when testing for the first difference.
+## From stl(): series is not periodic or has less than two periods
+## 0 seasonal differences will be used. Consider using a different unit root test.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  ARIMA(0,0,0)             with zero mean     : 13502.73
+##  ARIMA(0,0,0)             with non-zero mean : 13486.17
+##  ARIMA(0,0,1)             with zero mean     : 13500.31
+##  ARIMA(0,0,1)             with non-zero mean : 13486.36
+##  ARIMA(0,0,2)             with zero mean     : 13497.74
+##  ARIMA(0,0,2)             with non-zero mean : 13486.31
+##  ARIMA(0,0,3)             with zero mean     : 13499.64
+##  ARIMA(0,0,3)             with non-zero mean : 13488.27
+##  ARIMA(0,0,4)             with zero mean     : 13501.68
+##  ARIMA(0,0,4)             with non-zero mean : 13490.08
+##  ARIMA(0,0,5)             with zero mean     : 13502.75
+##  ARIMA(0,0,5)             with non-zero mean : 13491.88
+##  ARIMA(1,0,0)             with zero mean     : 13499.36
+##  ARIMA(1,0,0)             with non-zero mean : 13486.11
+##  ARIMA(1,0,1) with zero mean     : Inf
+##  ARIMA(1,0,1)             with non-zero mean : 13487.39
+##  ARIMA(1,0,2)             with zero mean     : 13499.59
+##  ARIMA(1,0,2)             with non-zero mean : 13488.32
+##  ARIMA(1,0,3)             with zero mean     : Inf
+##  ARIMA(1,0,3)             with non-zero mean : 13490.24
+##  ARIMA(1,0,4)             with zero mean     : Inf
+##  ARIMA(1,0,4)             with non-zero mean : 13491.97
+##  ARIMA(2,0,0)             with zero mean     : 13497.48
+##  ARIMA(2,0,0)             with non-zero mean : 13486.58
+##  ARIMA(2,0,1)             with zero mean     : 13499.49
+##  ARIMA(2,0,1)             with non-zero mean : 13488.52
+##  ARIMA(2,0,2) with zero mean     : Inf
+##  ARIMA(2,0,2) with non-zero mean : Inf
+##  ARIMA(2,0,3) with zero mean     : Inf
+##  ARIMA(2,0,3)             with non-zero mean : Inf
+##  ARIMA(3,0,0)             with zero mean     : 13499.49
+##  ARIMA(3,0,0)             with non-zero mean : 13488.38
+##  ARIMA(3,0,1)             with zero mean     : Inf
+##  ARIMA(3,0,1)             with non-zero mean : 13490.3
+##  ARIMA(3,0,2)             with zero mean     : Inf
+##  ARIMA(3,0,2)             with non-zero mean : Inf
+##  ARIMA(4,0,0)             with zero mean     : 13501.54
+##  ARIMA(4,0,0)             with non-zero mean : 13490.03
+##  ARIMA(4,0,1)             with zero mean     : Inf
+##  ARIMA(4,0,1)             with non-zero mean : 13491.96
+##  ARIMA(5,0,0)             with zero mean     : 13502.4
+##  ARIMA(5,0,0)             with non-zero mean : 13491.91
+## 
+## 
+## 
+##  Best model: ARIMA(1,0,0)             with non-zero mean
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(modelo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Series: ts_2b 
+## ARIMA(1,0,0) with non-zero mean 
+## 
+## Coefficients:
+##          ar1       mean
+##       0.0747  3678246.8
+## s.e.  0.0515   904697.1
+## 
+## sigma^2 estimated as 2.649e+14:  log likelihood=-6740.02
+## AIC=13486.04   AICc=13486.11   BIC=13497.82
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{checkresiduals}\NormalTok{(modelo)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oncase2b_files/figure-latex/unnamed-chunk-8-2.pdf}
+
+\begin{verbatim}
+## 
+##  Ljung-Box test
+## 
+## data:  Residuals from ARIMA(1,0,0) with non-zero mean
+## Q* = 19.487, df = 73, p-value = 1
+## 
+## Model df: 2.   Total lags used: 75
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(modelo}\SpecialCharTok{$}\NormalTok{residuals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  modelo$residuals
+## W = 0.18434, p-value < 2.2e-16
+\end{verbatim}
+
+\#previsao para 1 mês
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{previsao }\OtherTok{=} \FunctionTok{forecast}\NormalTok{(modelo,}\AttributeTok{h=}\DecValTok{4}\NormalTok{)}
+\NormalTok{previsao}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           Point Forecast     Lo 80    Hi 80     Lo 95    Hi 95
+## 2021.0247        3438728 -17419383 24296840 -28461001 35338457
+## 2021.0274        3660366 -17255787 24576519 -28328130 35648862
+## 2021.0301        3676912 -17239564 24593388 -28312078 35665902
+## 2021.0329        3678147 -17238331 24594625 -28310845 35667140
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{autoplot}\NormalTok{(previsao)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oncase2b_files/figure-latex/unnamed-chunk-9-1.pdf}
 
 \end{document}

@@ -3,9 +3,9 @@ title: "Oncase2b"
 author: "Pedro"
 date: "25/01/2022"
 output:
-  word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -44,7 +44,7 @@ boxplot(ts_2b)
 
 Segue abaixo uma análise de decomposição da série em estudo.
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 dec =   decompose(ts_2b)
 autoplot(dec)
 
@@ -55,7 +55,7 @@ Percebe-se que não é possível decompor a série pois ela não tem mais de 1 p
 
 gerou um autoplot da decomposi??o acima
 observar se existe um padr?o de sazonalidade e verificar a regularidade
-```{r}
+```{r eval=FALSE, include=FALSE}
 autoplot(window(dec$trend, start=c(2020,9)))
 
 ```
