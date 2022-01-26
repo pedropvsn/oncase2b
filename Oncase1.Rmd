@@ -10,6 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+```{r}
+install.packages("kableExtra")
+```
 
 
 ```{r cars}
@@ -17,7 +20,7 @@ library(readxl)
 library(tidyverse)
 library(dplyr)
 library(tidyr)
-
+library(kableExtra)
 ```
 
 
@@ -36,5 +39,26 @@ receita = rename(receita, fat = Column1.fat,
        title = Column1.title,
        sodium = Column1.sodium)
 head(receita)
+```
+
+
+```{r}
+summary(receita$title)
+
+```
+
+
+
+```{r}
+kable(receita %>%
+  group_by(categories)%>%
+  summarise(m_fat = mean(fat), m_calories = mean(calories), m_sodium = mean(sodium)))%>%
+ kable_styling()
+```
+
+
+
+```{r}
+
 ```
 
