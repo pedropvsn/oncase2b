@@ -23,6 +23,7 @@ library(readxl)
 
 ```{r}
 serie_tempo_2b <- read_excel("~/Job/Oncase desafio/serie_tempo_2b.xlsx")
+View(serie_tempo_2b)
 ```
 
 
