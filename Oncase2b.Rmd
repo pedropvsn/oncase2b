@@ -3,6 +3,7 @@ title: "Oncase2b"
 author: "Pedro"
 date: "25/01/2022"
 output:
+  word_document: default
   pdf_document: default
   html_document: default
 ---
@@ -39,5 +40,59 @@ autoplot(ts_2b)
 
 hist(ts_2b)
 boxplot(ts_2b)
+```
+
+Segue abaixo uma análise de decomposição da série em estudo.
+
+```{r}
+dec =   decompose(ts_2b)
+autoplot(dec)
+
+```
+Percebe-se que não é possível decompor a série pois ela não tem mais de 1 período.
+
+
+
+gerou um autoplot da decomposi??o acima
+observar se existe um padr?o de sazonalidade e verificar a regularidade
+```{r}
+autoplot(window(dec$trend, start=c(2020,9)))
+
+```
+
+Foram realizadas algumas tentativas de avaliar a existência de sazonalidad porém não foi possível por não ter mais de um período na série.
+
+```{r}
+ggseasonplot(ts_2b)
+ggseasonplot(window(ts_2b, start=c(2021)))
+
+```
+
+#teste de estacionariedade
+
+```{r}
+est = ur.kpss(ts_2b)
+print(est)
+ndiffs(ts_2b)
+
+
+tsdisplay(ts_2b)
+
+modelo = auto.arima(ts_2b, trace = T,stepwise = F, approximation = F )
+print(modelo)
+
+checkresiduals(modelo)
+
+shapiro.test(modelo$residuals)
+
+```
+
+
+#previsao para 1 mês
+```{r}
+previsao = forecast(modelo,h=4)
+previsao
+autoplot(previsao)
+
 ```
 
