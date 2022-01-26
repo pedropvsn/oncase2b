@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 install.packages("kableExtra")
+install.packages("ggcorrplot")
 ```
 
 
@@ -21,6 +22,9 @@ library(tidyverse)
 library(dplyr)
 library(tidyr)
 library(kableExtra)
+library(ggplot2)
+library(ggcorrplot)
+
 ```
 
 
@@ -52,17 +56,42 @@ summary(receita$title)
 ```{r}
 rec_m <- receita %>%
   group_by(categories)%>%
-  summarise(m_fat = mean(fat, na.rm = TRUE),
+  summarise(m_fat = mean(fat, na.rm = TRUE ),
             m_calories = mean(calories, na.rm = TRUE),
-            m_sodium = mean(sodium, na.rm = TRUE))
-rec_m
+            m_sodium = mean(sodium, na.rm = TRUE),
+            m_protein = mean(protein, na.rm = TRUE))
+rec_mo<-na.omit(rec_m)
+rec_mo
+```
 
+
+```{r}
+rec_mo<-na.omit(rec_m)
 ```
 
 
 
 
 ```{r}
-summarise(mean(rec_m, ))
+mean(rec_mo$m_fat, na.rm = TRUE)
+cor(rec_mo$m_fat, rec_mo$m_sodium)
+
+round(mean(rec_mo$m_fat, na.rm = TRUE),3)
+
+round(cor(rec_mo$m_fat, rec_mo$m_sodium),3)
+```
+```{r}
+ggplot(rec_mo, aes(x=m_fat, y=m_sodium))+
+  geom_point(col="red")+
+  labs(x="Média de gordura",
+       y="Média de Sódio",
+       title="Diagrama de Dispersão")+
+  theme_bw()
+  
+
+```
+
+```{r}
+cor(rec_mo)
 ```
 
