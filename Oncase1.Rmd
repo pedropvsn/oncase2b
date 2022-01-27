@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 install.packages("kableExtra")
 install.packages("ggcorrplot")
 ```
-
+Carregamento dos outliers que serão utilizados na análise descritiva de dados
 
 ```{r cars}
 library(readxl)
@@ -24,12 +24,15 @@ library(ggcorrplot)
 
 ```
 
-
+Leitura da base de dados para realização da análise descritiva dos dados. A estratégia utilizada será a realização de gráficos e medidas de posição para detectar o comportamento dos indicadores "Fat", "Calories", Protein" nos tipos de receita e/ou categorias, bem como sua relação com o score dos pratos. 
 ```{r}
 receita <- read_excel("~/Job/Oncase desafio/Receita_json_Oficial.xlsx")
 
 ```
-Falar como se chegou a este recorte, como chegou a este primeiro recorte?
+
+
+##Renomear as variáveis que serão utilizadas, bem como análise inicial dos dados:
+Percebe-se que temos um data-frame com dados numéricos e categóricos. Após filtro preliminar, restou uma base de dados de diversos tipos de receitas, o qual, cada linha contém uma categoria e diversos indicadores numéricos.
 
 ```{r}
 receita = rename(receita, fat = Column1.fat,
@@ -46,11 +49,29 @@ head(receita)
 ```
 
 
+
+
+Ao realizar uma sumarização dos principais resultados, percebe-se que há muitos dados faltantes "NA" nas variáveis numéricas. Ao analisar os valores máximos destas variáveis, percebe-se uma discrepância se comparado as medidas de posição.
+
+
+
+```{r}
+summary(receita)
+```
+
+
+
+Inicialmente a base de dados apresenta 17.776 tipos diferentes de receitas, classificadas em 675 categorias. 
+
 ```{r}
 summary(unique(receita$title))
+summary(unique(receita$categories))
 
 
 ```
+
+
+
 
 ```{r}
 rec_title<- receita %>% 
@@ -59,7 +80,7 @@ rec_title<- receita %>%
 rec_title
 ```
 
-
+De forma a utilizar 
 
 
 
