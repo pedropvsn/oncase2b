@@ -19,10 +19,7 @@ install.packages("ggcorrplot")
 ```{r cars}
 library(readxl)
 library(tidyverse)
-library(dplyr)
-library(tidyr)
 library(kableExtra)
-library(ggplot2)
 library(ggcorrplot)
 
 ```
@@ -30,8 +27,9 @@ library(ggcorrplot)
 
 ```{r}
 receita <- read_excel("~/Job/Oncase desafio/Receita_json_Oficial.xlsx")
-```
 
+```
+Falar como se chegou a este recorte, como chegou a este primeiro recorte?
 
 ```{r}
 receita = rename(receita, fat = Column1.fat,
@@ -42,31 +40,138 @@ receita = rename(receita, fat = Column1.fat,
        rating = Column1.rating,
        title = Column1.title,
        sodium = Column1.sodium)
+glimpse(receita)
+
 head(receita)
 ```
 
 
 ```{r}
-summary(receita$title)
+summary(unique(receita$title))
 
+
+```
+
+```{r}
+rec_title<- receita %>% 
+  dplyr::distinct(title, .keep_all = TRUE) %>% 
+  drop_na()
+rec_title
+```
+
+
+
+
+
+```{r}
+rec_title %>% 
+  select(-2,-3,-7) %>% 
+  cor()
+#cor(rec_mo)
 ```
 
 
 
 ```{r}
-rec_m <- receita %>%
+ggplot(rec_title, aes(x="", y=fat ))+
+  geom_boxplot(col="red")
+
+ggplot(rec_title, aes(x="", y=calories ))+
+  geom_boxplot(col="red")
+
+ggplot(rec_title, aes(x="", y=protein ))+
+  geom_boxplot(col="red")
+
+ggplot(rec_title, aes(x="", y=sodium ))+
+  geom_boxplot(col="red")
+
+
+ggplot(rec_title, aes(x="", y=rating ))+
+  geom_boxplot(col="red")
+
+```
+
+
+
+
+```{r}
+ggplot(rec_title, aes(x="", y=fat ))+
+  geom_boxplot(col="red")
+```
+
+
+
+
+
+```{r}
+base$idade <- as.integer(base$idade)
+```
+
+
+
+
+
+
+Avaliar a quantidade de Na's.
+
+```{r}
+summary(receita)
+```
+
+
+
+```{r}
+rec_mo<-na.omit(rec_m)
+
+rec_mo <- receita %>%
+  drop_na()%>%
   group_by(categories)%>%
   summarise(m_fat = mean(fat, na.rm = TRUE ),
             m_calories = mean(calories, na.rm = TRUE),
             m_sodium = mean(sodium, na.rm = TRUE),
             m_protein = mean(protein, na.rm = TRUE))
-rec_mo<-na.omit(rec_m)
+
 rec_mo
+```
+```{r}
+#rec_mo$m_fat <- as.numeric(rec_mo$m_fat)
+
+#rec_mo$m_fat
+
+rec_mo
+
+
 ```
 
 
 ```{r}
 rec_mo<-na.omit(rec_m)
+```
+
+
+
+
+```{r}
+summary(rec_mo)
+```
+
+
+
+```{r}
+
+```
+
+
+Observar se ainda há NA's
+```{r}
+summary(rec_mo)
+```
+```{r}
+
+rec_mo %>% 
+  select(-1) %>% 
+  cor()
+#cor(rec_mo)
 ```
 
 
@@ -91,6 +196,18 @@ ggplot(rec_mo, aes(x=m_fat, y=m_sodium))+
 
 ```
 
+
+```{r}
+
+ggplot(rec_mo, aes(x="", y=m_sodium))+
+  geom_boxplot(col="red")
+
+```
+
+
+
+
+Calcular correlação
 ```{r}
 cor(rec_mo)
 ```
