@@ -71,7 +71,7 @@ summary(unique(receita$categories))
 ```
 
 
-
+Percebemos a presença de informações NA e NaN, por isso utilizamos a função abaixo para excluir estes casos. 
 
 ```{r}
 rec_title<- receita %>% 
@@ -80,8 +80,10 @@ rec_title<- receita %>%
 rec_title
 ```
 
-De forma a utilizar 
+Selecionamos apenas as variáveis núméricas para realizar uma análsie de correlação.
+Verifica-se a baixa correlação entre o rating e as variáveis "fat", "calories", "protein" e "sodium".
 
+Logo esta taxa rating tem mais a ver com a qualidade/sabor da receita.
 
 
 ```{r}
@@ -91,7 +93,7 @@ rec_title %>%
 #cor(rec_mo)
 ```
 
-
+Abaixo podemos verificar a distribuição das variáveis. Podemos perceber a presença de informações atípicas na base de dados em análise.
 
 ```{r}
 ggplot(rec_title, aes(x="", y=fat ))+
